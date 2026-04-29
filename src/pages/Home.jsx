@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import ProjectCard from '../components/ProjectCard';
+import ProjectCarousel from '../components/ProjectCarousel';
 import { profile, projects, skills } from '../data/projects';
 import { aboutSections } from '../data/about';
 
@@ -21,9 +21,6 @@ export default function Home() {
     }
   }, []);
 
-  const featuredProject = projects[1] || projects[0];
-  const otherProjects = projects.filter((project) => project.slug !== featuredProject.slug);
-
   return (
     <>
       <section className="hero-section" id="hero">
@@ -32,7 +29,7 @@ export default function Home() {
             <span className="hero-kicker">Portfolio — Ingénieur DevOps</span>
 
             <h1>
-              Je transforme les irritants du quotidien en outils DevOps utiles.
+              Un ingénieur DevOps qui apporte de la clarté, de l’automatisation et de la fiabilité.
             </h1>
 
             <p className="hero-intro">
@@ -141,22 +138,17 @@ export default function Home() {
 
       <section className="projects-section" id="projects">
         <div className="container">
-          <div className="section-heading">
-            <span className="section-kicker">Projets</span>
-            <h2>Mes projets sont la preuve de ma manière de travailler.</h2>
+          <div className="section-heading centered">
+            <span className="section-kicker">Projets & réalisations</span>
+            <h2>Un projet après l’autre, une preuve après l’autre.</h2>
             <p>
-              Je ne veux pas seulement dire que je suis autonome, créatif ou force de proposition.
-              Je préfère montrer ce que j’ai construit.
+              Mes projets évoluent avec mon parcours. Certains viennent de CAGIP,
+              d’autres de mes expériences précédentes ou de mon environnement personnel.
+              Tous montrent la même chose : j’aime construire des solutions concrètes.
             </p>
           </div>
 
-          <ProjectCard project={featuredProject} index={projects.indexOf(featuredProject)} featured />
-
-          <div className="project-grid">
-            {otherProjects.map((project, index) => (
-              <ProjectCard key={project.slug} project={project} index={projects.indexOf(project)} />
-            ))}
-          </div>
+          <ProjectCarousel projects={projects} />
         </div>
       </section>
 
