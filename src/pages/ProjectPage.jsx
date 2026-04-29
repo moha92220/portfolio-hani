@@ -6,6 +6,8 @@ import { projects } from '../data/projects';
 export default function ProjectPage() {
   const { slug } = useParams();
   const project = projects.find((item) => item.slug === slug);
+  const projectIndex = projects.findIndex((item) => item.slug === slug);
+  const projectNumber = String(projectIndex + 1).padStart(2, '0');
 
   if (!project) {
     return (
@@ -31,12 +33,11 @@ export default function ProjectPage() {
               ← Retour à l’accueil
             </Link>
 
-            <span className="eyebrow">Étude de cas</span>
+            <span className="eyebrow">Étude de cas — {projectNumber}</span>
 
             <h1>{project.name}</h1>
 
             <p className="project-tagline">{project.tagline}</p>
-
             <p>{project.context}</p>
 
             <div className="tag-list large">
@@ -54,12 +55,12 @@ export default function ProjectPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section project-reading">
         <div className="container">
           <SectionTitle
-            eyebrow="Valeur créée"
+            eyebrow="Lecture du projet"
             title="Le besoin, l’approche et le résultat"
-            description="Une lecture simple du projet : pourquoi il existe, comment il a été pensé, et ce qu’il apporte concrètement."
+            description="Une lecture simple pour comprendre pourquoi le projet existe, comment il a été construit et ce qu’il apporte concrètement."
             centered
           />
 
@@ -71,9 +72,10 @@ export default function ProjectPage() {
         </div>
       </section>
 
-      <section className="section section-soft">
+      <section className="section project-details">
         <div className="container info-grid">
           <div className="info-card">
+            <span className="panel-number">01</span>
             <h3>Mon rôle</h3>
 
             <ul>
@@ -84,6 +86,7 @@ export default function ProjectPage() {
           </div>
 
           <div className="info-card">
+            <span className="panel-number">02</span>
             <h3>Points forts</h3>
 
             <ul>
@@ -95,9 +98,9 @@ export default function ProjectPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section impact-section">
         <div className="container impact-panel">
-          <span className="eyebrow">Ce que ce projet démontre</span>
+          <span className="eyebrow">Ce que ça montre</span>
 
           <h2>Ce que ce projet dit de ma manière de travailler</h2>
 
@@ -105,11 +108,11 @@ export default function ProjectPage() {
         </div>
       </section>
 
-      <section className="section section-soft">
+      <section className="section gallery-section">
         <div className="container">
           <SectionTitle
             eyebrow="Galerie"
-            title="Visuels du projet"
+            title="Aperçu du projet"
             centered
           />
 

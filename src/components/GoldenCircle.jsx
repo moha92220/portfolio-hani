@@ -1,22 +1,26 @@
-function CircleBlock({ title, items, tone }) {
+function ValueCard({ index, title, items }) {
   return (
-    <div className={`circle-block ${tone}`}>
-      <div className="circle-icon">{title}</div>
+    <article className="value-card">
+      <div className="value-card-head">
+        <span className="value-index">{index}</span>
+        <h3>{title}</h3>
+      </div>
+
       <ul>
         {items.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>
-    </div>
+    </article>
   );
 }
 
 export default function GoldenCircle({ why, how, what }) {
   return (
-    <section className="golden-circle">
-      <CircleBlock title="Pourquoi" items={why} tone="tone-one" />
-      <CircleBlock title="Comment" items={how} tone="tone-two" />
-      <CircleBlock title="Quoi" items={what} tone="tone-three" />
+    <section className="value-framework">
+      <ValueCard index="01" title="Pourquoi" items={why} />
+      <ValueCard index="02" title="Comment" items={how} />
+      <ValueCard index="03" title="Quoi" items={what} />
     </section>
   );
 }
