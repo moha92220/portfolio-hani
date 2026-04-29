@@ -86,10 +86,17 @@ function Footer() {
 
 export default function Layout({ children }) {
   return (
-    <>
+    <div className="site-shell comic-shell">
+      <div className="comic-bg comic-dots-left" aria-hidden="true" />
+      <div className="comic-bg comic-dots-right" aria-hidden="true" />
+      <div className="comic-bubble bubble-one" aria-hidden="true">Cloud</div>
+      <div className="comic-bubble bubble-two" aria-hidden="true">Kubernetes</div>
+      <div className="comic-burst burst-one" aria-hidden="true">Automation</div>
+
       <Header />
       <main>{children}</main>
       <Footer />
-    </>
+    </div>
   );
 }
+
