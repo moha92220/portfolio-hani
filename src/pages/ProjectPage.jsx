@@ -57,13 +57,17 @@ export default function ProjectPage() {
       <section className="section">
         <div className="container">
           <SectionTitle
-            eyebrow="Le cercle d’or"
-            title="Présenter le projet comme un produit qui répond à un vrai besoin"
-            description="Pour montrer non seulement ce qui a été réalisé, mais surtout la valeur créée."
+            eyebrow="Valeur créée"
+            title="Le besoin, l’approche et le résultat"
+            description="Une lecture simple du projet : pourquoi il existe, comment il a été pensé, et ce qu’il apporte concrètement."
             centered
           />
 
-          <GoldenCircle why={project.why} how={project.how} what={project.what} />
+          <GoldenCircle
+            why={project.why}
+            how={project.how}
+            what={project.what}
+          />
         </div>
       </section>
 
@@ -93,9 +97,9 @@ export default function ProjectPage() {
 
       <section className="section">
         <div className="container impact-panel">
-          <span className="eyebrow">Impact & posture</span>
+          <span className="eyebrow">Ce que ce projet démontre</span>
 
-          <h2>Ce que ce projet dit de moi</h2>
+          <h2>Ce que ce projet dit de ma manière de travailler</h2>
 
           <p>{project.impact}</p>
         </div>
@@ -105,8 +109,8 @@ export default function ProjectPage() {
         <div className="container">
           <SectionTitle
             eyebrow="Galerie"
-            title="Quelques visuels pour illustrer le projet"
-            description="Tu remplaceras simplement ces emplacements par tes vraies captures d’écran."
+            title="Visuels du projet"
+            centered
           />
 
           <div className="gallery-grid">
