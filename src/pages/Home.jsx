@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import ProjectCard from '../components/ProjectCard';
-import SectionTitle from '../components/SectionTitle';
 import { profile, projects, skills } from '../data/projects';
 import { aboutSections } from '../data/about';
 
@@ -32,141 +31,82 @@ export default function Home() {
   return (
     <>
       <section className="hero-section" id="hero">
-        <div className="container hero-grid">
-          <div className="hero-copy">
-            <span className="eyebrow">Portfolio — Recherche de CDI</span>
+        <div className="container hero-content">
+          <span className="hero-kicker">Portfolio — Recherche de CDI</span>
 
-            <h1>
-              Créer des outils DevOps utiles, fiables et adoptés par les équipes.
-            </h1>
+          <h1 className="hero-title">
+            Ingénieur DevOps qui conçoit des outils utiles, fiables et adoptés.
+          </h1>
 
-            <p className="hero-intro">
-              Ingénieur DevOps en alternance au Crédit Agricole, je travaille autour du cloud,
-              de Kubernetes, de l’automatisation, de l’observabilité et du FinOps.
-              J’aime partir d’un besoin terrain, concevoir une solution claire, puis la rendre
-              réellement exploitable par les équipes.
-            </p>
+          <p className="hero-intro">
+            Actuellement ingénieur DevOps en alternance au Crédit Agricole, je travaille autour
+            du cloud, de Kubernetes, de l’automatisation, de l’observabilité et du FinOps.
+            J’aime partir d’un besoin terrain, créer une solution claire, puis la rendre utile
+            au quotidien pour les équipes.
+          </p>
 
-            <div className="hero-actions">
-              <button
-                className="button button-primary"
-                type="button"
-                onClick={() => scrollToSection('projects')}
-              >
-                Voir mes projets
-              </button>
+          <div className="hero-actions">
+            <button
+              className="button button-primary"
+              type="button"
+              onClick={() => scrollToSection('projects')}
+            >
+              Découvrir mes projets
+            </button>
 
-              <a
-                className="button button-secondary"
-                href={profile.cvPath}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Télécharger mon CV
-              </a>
-            </div>
-
-            <div className="hero-metrics">
-              <div>
-                <strong>4</strong>
-                <span>projets internes</span>
-              </div>
-
-              <div>
-                <strong>5 ans</strong>
-                <span>école supérieure & alternance</span>
-              </div>
-
-              <div>
-                <strong>Cloud / Kube</strong>
-                <span>trajectoire DevOps</span>
-              </div>
-            </div>
+            <a
+              className="button button-secondary"
+              href={profile.cvPath}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Télécharger mon CV
+            </a>
           </div>
+        </div>
 
-          <aside className="hero-profile-board">
-            <div className="profile-board-top">
-              <img src={profile.heroImage} alt={profile.name} />
-
-              <div>
-                <span className="board-label">Profil</span>
-                <h2>{profile.name}</h2>
-                <p>{profile.title}</p>
-              </div>
-            </div>
-
-            <div className="profile-board-line" />
-
-            <div className="profile-board-content">
-              <div>
-                <strong>Mon terrain</strong>
-                <span>GitLab CI/CD, Kubernetes, GCP, GitOps, scripts, supervision, FinOps.</span>
-              </div>
-
-              <div>
-                <strong>Ma posture</strong>
-                <span>Autonomie, confiance, entraide, curiosité et sens de la contribution.</span>
-              </div>
-
-              <div>
-                <strong>Mon cap</strong>
-                <span>Monter en compétences et évoluer vers un rôle de Tech Lead DevOps.</span>
-              </div>
-            </div>
-          </aside>
+        <div className="container portfolio-strip">
+          {projects.map((project, index) => (
+            <LinkStrip project={project} index={index} key={project.slug} />
+          ))}
         </div>
       </section>
 
-      <section className="section identity-section" id="vision">
-        <div className="container identity-grid">
-          <div className="identity-title">
-            <span className="eyebrow">{aboutSections.positioning.eyebrow}</span>
-            <h2>{aboutSections.positioning.title}</h2>
+      <section className="editorial-section" id="about">
+        <div className="container editorial-grid">
+          <div>
+            <span className="editorial-label">Profil</span>
+            <h2 className="editorial-title">
+              Un profil DevOps polyvalent, orienté cloud, Kubernetes et création de valeur.
+            </h2>
           </div>
 
-          <div className="identity-text">
+          <div className="editorial-text">
             {aboutSections.positioning.paragraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
+
+            <div className="values-list">
+              {profile.values.map((value) => (
+                <span key={value}>{value}</span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section creation-section">
-        <div className="container creation-grid">
-          <article className="feature-panel large-panel">
-            <span className="eyebrow">{aboutSections.motivation.eyebrow}</span>
-            <h2>{aboutSections.motivation.title}</h2>
-
-            {aboutSections.motivation.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </article>
-
-          <article className="feature-panel list-panel">
-            <span className="panel-number">01</span>
-            <h3>Ce que j’aime concevoir</h3>
-
-            <ul>
-              <li>Des automatisations qui font gagner du temps.</li>
-              <li>Des outils qui rendent la donnée plus lisible.</li>
-              <li>Des solutions qui améliorent la réactivité des équipes.</li>
-              <li>Des déploiements propres et industrialisés.</li>
-              <li>Des projets qui répondent à de vrais besoins terrain.</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section className="section projects-section" id="projects">
+      <section className="projects-section" id="projects">
         <div className="container">
-          <SectionTitle
-            eyebrow="Réalisations"
-            title="Des projets pensés pour être utilisés"
-            description="Cloud, Kubernetes, automatisation, observabilité et optimisation : chaque projet répond à un besoin concret."
-          />
+          <div className="section-heading">
+            <span className="editorial-label">Réalisations</span>
+            <h2>Des projets conçus pour être utilisés.</h2>
+            <p>
+              FinOps, testeur de flux, observabilité, automatisation : chaque projet part
+              d’un besoin concret et cherche à simplifier le travail des équipes.
+            </p>
+          </div>
 
-          <div className="project-grid">
+          <div className="showcase-list">
             {projects.map((project, index) => (
               <ProjectCard key={project.slug} project={project} index={index} />
             ))}
@@ -174,81 +114,40 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section value-section">
-        <div className="container">
-          <SectionTitle
-            eyebrow="Valeur créée"
-            title="Ce que mes projets apportent réellement"
-            description="Au-delà de la technique, je cherche à construire des outils utiles, adoptables et porteurs de valeur."
-          />
+      <section className="human-section">
+        <div className="container human-grid">
+          <article className="human-card">
+            <span className="editorial-label">{aboutSections.motivation.eyebrow}</span>
+            <h2>{aboutSections.motivation.title}</h2>
 
-          <div className="proof-grid">
-            {aboutSections.proof.cards.map((card, index) => (
-              <article className="proof-card" key={card.title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
-              </article>
+            {aboutSections.motivation.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
             ))}
-          </div>
-        </div>
-      </section>
+          </article>
 
-      <section className="section posture-section">
-        <div className="container posture-grid">
-          <article className="feature-panel">
-            <span className="eyebrow">{aboutSections.teamwork.eyebrow}</span>
-            <h3>{aboutSections.teamwork.title}</h3>
+          <article className="human-card">
+            <span className="editorial-label">{aboutSections.teamwork.eyebrow}</span>
+            <h2>{aboutSections.teamwork.title}</h2>
 
             {aboutSections.teamwork.paragraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </article>
-
-          <article className="feature-panel">
-            <span className="eyebrow">{aboutSections.ambition.eyebrow}</span>
-            <h3>{aboutSections.ambition.title}</h3>
-
-            {aboutSections.ambition.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </article>
         </div>
       </section>
 
-      <section className="section about-section" id="about">
-        <div className="container about-grid">
+      <section className="skills-section">
+        <div className="container skills-layout">
           <div>
-            <SectionTitle
-              eyebrow="À propos"
-              title="Un profil technique, autonome et orienté usage"
-              description="Mon parcours m’a permis d’évoluer entre support, systèmes, sécurité, production et DevOps. Aujourd’hui, cela me donne une vision à la fois opérationnelle, transverse et concrète."
-            />
-
+            <span className="editorial-label">Compétences</span>
+            <h2>Une base technique large, avec une trajectoire cloud et Kubernetes.</h2>
             <p>
-              J’aime les missions avec un objectif clair, en autonomie comme en équipe.
-              Quand le cadre est bien défini, je peux avancer vite, proposer, construire
-              et contribuer avec efficacité.
-            </p>
-
-            <p>
-              Je suis particulièrement fier des projets menés en autonomie,
-              car ils montrent ma capacité à partir d’une idée, comprendre un besoin,
-              choisir les bons outils et créer une solution réellement utile.
-            </p>
-
-            <p>
-              Aucun projet ne résume à lui seul mon potentiel. C’est l’ensemble qui compte :
-              FinOps, testeur de flux, popup d’observabilité, automatisation du CRA.
-              Si cette manière de penser la technique vous parle, je peux apporter cette énergie
-              et cette capacité de réalisation à votre équipe.
+              Mon objectif est de continuer à apprendre, proposer des solutions,
+              monter en responsabilité et évoluer vers un rôle de Tech Lead DevOps.
             </p>
           </div>
 
           <aside className="skills-panel">
-            <span className="panel-number">02</span>
-            <h3>Compétences clés</h3>
-
             <div className="skills-cloud">
               {skills.map((skill) => (
                 <span key={skill} className="skill-pill">
@@ -277,18 +176,17 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section contact-section" id="contact">
+      <section className="contact-section" id="contact">
         <div className="container contact-card">
-          <div>
-            <span className="eyebrow">Contact</span>
-            <h2>Discutons de la suite</h2>
+          <span className="editorial-label">Contact</span>
 
-            <p>
-              Si vous recherchez un profil DevOps curieux, impliqué, humain et capable
-              de transformer des besoins opérationnels en solutions concrètes,
-              je serai ravi d’échanger avec vous.
-            </p>
-          </div>
+          <h2>Discutons de la suite.</h2>
+
+          <p>
+            Si vous recherchez un profil DevOps curieux, impliqué, humain et capable
+            de transformer des besoins opérationnels en solutions concrètes,
+            je serai ravi d’échanger avec vous.
+          </p>
 
           <div className="cta-actions">
             <a className="button button-primary" href={`mailto:${profile.email}`}>
@@ -307,5 +205,20 @@ export default function Home() {
         </div>
       </section>
     </>
+  );
+}
+
+function LinkStrip({ project, index }) {
+  const number = String(index + 1).padStart(2, '0');
+
+  return (
+    <a className="strip-panel" href={`#/projets/${project.slug}`}>
+      <img src={project.coverImage} alt={project.name} />
+
+      <div>
+        <span>{number}</span>
+        <strong>{project.name}</strong>
+      </div>
+    </a>
   );
 }

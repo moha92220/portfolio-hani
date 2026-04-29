@@ -8,11 +8,9 @@ function Header() {
   const goToSection = (sectionId) => {
     if (location.pathname === '/') {
       const element = document.getElementById(sectionId);
-
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-
       return;
     }
 
@@ -25,7 +23,6 @@ function Header() {
       <div className="container nav-shell">
         <Link to="/" className="brand-mark">
           <span className="brand-symbol">HH</span>
-
           <div>
             <strong>{profile.name}</strong>
             <span>{profile.title}</span>
@@ -36,15 +33,12 @@ function Header() {
           <button type="button" className="nav-button" onClick={() => goToSection('hero')}>
             Accueil
           </button>
-
           <button type="button" className="nav-button" onClick={() => goToSection('projects')}>
             Projets
           </button>
-
           <button type="button" className="nav-button" onClick={() => goToSection('about')}>
             Profil
           </button>
-
           <button type="button" className="nav-button" onClick={() => goToSection('contact')}>
             Contact
           </button>
@@ -61,27 +55,23 @@ function Footer() {
         <div>
           <span className="footer-label">Portfolio DevOps</span>
           <h3>{profile.name}</h3>
-
           <p>
-            Ingénieur DevOps orienté cloud, Kubernetes, automatisation et observabilité.
-            J’aime concevoir des solutions utiles, fiables et pensées pour les équipes.
+            Ingénieur DevOps orienté cloud, Kubernetes, automatisation, observabilité
+            et création de solutions utiles pour les équipes.
           </p>
         </div>
 
         <div>
           <span className="footer-label">Liens</span>
-
           <ul>
             <li>
               <a href={profile.linkedin} target="_blank" rel="noreferrer">
                 LinkedIn
               </a>
             </li>
-
             <li>
               <a href={`mailto:${profile.email}`}>{profile.email}</a>
             </li>
-
             <li>
               <a href={profile.cvPath} target="_blank" rel="noreferrer">
                 Télécharger le CV
@@ -93,7 +83,7 @@ function Footer() {
 
       <div className="container footer-bottom">
         <span>© {new Date().getFullYear()} {profile.name}</span>
-        <span>Conçu comme un portfolio technique, humain et orienté valeur.</span>
+        <span>Portfolio technique, humain et orienté valeur.</span>
       </div>
     </footer>
   );

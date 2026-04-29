@@ -4,14 +4,14 @@ export default function ProjectCard({ project, index = 0 }) {
   const number = String(index + 1).padStart(2, '0');
 
   return (
-    <article className={`project-card accent-${project.accent}`}>
+    <article className="showcase-card">
       <Link to={`/projets/${project.slug}`} className="project-card-link">
-        <div className="project-card-image">
+        <div className="showcase-media">
           <img src={project.coverImage} alt={project.name} />
         </div>
 
-        <div className="project-card-body">
-          <div className="project-card-meta">
+        <div className="showcase-content">
+          <div className="showcase-meta">
             <span>{number}</span>
             <span>{project.stack[0]}</span>
           </div>
@@ -27,7 +27,7 @@ export default function ProjectCard({ project, index = 0 }) {
             ))}
           </div>
 
-          <span className="text-link">Voir le projet →</span>
+          <span className="showcase-cta">Voir le projet →</span>
         </div>
       </Link>
     </article>
