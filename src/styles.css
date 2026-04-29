@@ -608,3 +608,106 @@ button {
     flex-direction: column;
   }
 }
+
+.about-story {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.about-story h2,
+.big-quote-card h2 {
+  font-size: clamp(1.9rem, 3.2vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  margin: 0.8rem 0 0;
+}
+
+.story-text,
+.big-quote-card,
+.principle-card,
+.proof-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.story-text {
+  padding: 1.7rem;
+}
+
+.story-text p,
+.big-quote-card p,
+.principle-card li,
+.proof-card p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.split-section {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.4rem;
+  align-items: stretch;
+}
+
+.big-quote-card,
+.principle-card,
+.proof-card {
+  padding: 1.7rem;
+}
+
+.big-quote-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.big-quote-card::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  bottom: -80px;
+  width: 220px;
+  height: 220px;
+  border-radius: 999px;
+  background: rgba(29, 78, 216, 0.08);
+}
+
+.principle-card h3,
+.proof-card h3 {
+  margin-top: 0;
+}
+
+.principle-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.principle-card li {
+  margin-bottom: 0.8rem;
+}
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.proof-card {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.proof-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.7rem;
+}
+
+@media (max-width: 980px) {
+  .about-story,
+  .split-section,
+  .proof-grid {
+    grid-template-columns: 1fr;
+  }
+}
