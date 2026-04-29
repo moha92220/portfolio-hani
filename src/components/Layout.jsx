@@ -8,9 +8,7 @@ function Header() {
   const goToSection = (sectionId) => {
     if (location.pathname === '/') {
       const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
 
@@ -22,22 +20,19 @@ function Header() {
     <header className="site-header">
       <div className="container nav-shell">
         <Link to="/" className="brand-mark">
-          <span className="brand-symbol">HH</span>
-          <div>
-            <strong>{profile.name}</strong>
-            <span>{profile.title}</span>
-          </div>
+          <strong>{profile.name}</strong>
+          <span>{profile.title}</span>
         </Link>
 
         <nav className="main-nav">
           <button type="button" className="nav-button" onClick={() => goToSection('hero')}>
             Accueil
           </button>
+          <button type="button" className="nav-button" onClick={() => goToSection('profile')}>
+            Profil
+          </button>
           <button type="button" className="nav-button" onClick={() => goToSection('projects')}>
             Projets
-          </button>
-          <button type="button" className="nav-button" onClick={() => goToSection('about')}>
-            Profil
           </button>
           <button type="button" className="nav-button" onClick={() => goToSection('contact')}>
             Contact
@@ -56,13 +51,13 @@ function Footer() {
           <span className="footer-label">Portfolio DevOps</span>
           <h3>{profile.name}</h3>
           <p>
-            Ingénieur DevOps orienté cloud, Kubernetes, automatisation, observabilité
-            et création de solutions utiles pour les équipes.
+            Ingénieur DevOps orienté cloud, Kubernetes, automatisation et création
+            de solutions utiles pour les équipes.
           </p>
         </div>
 
         <div>
-          <span className="footer-label">Liens</span>
+          <span className="footer-label">Contact</span>
           <ul>
             <li>
               <a href={profile.linkedin} target="_blank" rel="noreferrer">
@@ -83,7 +78,7 @@ function Footer() {
 
       <div className="container footer-bottom">
         <span>© {new Date().getFullYear()} {profile.name}</span>
-        <span>Portfolio technique, humain et orienté valeur.</span>
+        <span>Cloud · Kubernetes · DevOps · Automatisation · Observabilité</span>
       </div>
     </footer>
   );

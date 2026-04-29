@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom';
 
-export default function ProjectCard({ project, index = 0 }) {
+export default function ProjectCard({ project, index = 0, featured = false }) {
   const number = String(index + 1).padStart(2, '0');
 
   return (
-    <article className="showcase-card">
+    <article className={`project-card ${featured ? 'project-card-featured' : ''}`}>
       <Link to={`/projets/${project.slug}`} className="project-card-link">
-        <div className="showcase-media">
+        <div className="project-media">
           <img src={project.coverImage} alt={project.name} />
         </div>
 
-        <div className="showcase-content">
-          <div className="showcase-meta">
+        <div className="project-content">
+          <div className="project-meta">
             <span>{number}</span>
             <span>{project.stack[0]}</span>
           </div>
@@ -27,7 +27,7 @@ export default function ProjectCard({ project, index = 0 }) {
             ))}
           </div>
 
-          <span className="showcase-cta">Voir le projet →</span>
+          <span className="project-link">Voir le projet →</span>
         </div>
       </Link>
     </article>
