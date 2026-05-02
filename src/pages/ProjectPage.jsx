@@ -1,129 +1,118 @@
-import { Link, useParams } from 'react-router-dom';
-import GoldenCircle from '../components/GoldenCircle';
+import { Link, useParams, Navigate } from 'react-router-dom';
 import { projects } from '../data/projects';
+import GoldenCircle from '../components/GoldenCircle';
 
 export default function ProjectPage() {
   const { slug } = useParams();
-  const project = projects.find((item) => item.slug === slug);
+  const project = projects.find(p => p.slug === slug);
 
-  if (!project) {
-    return (
-      <section className="empty-page">
-        <div className="container">
-          <h1>Projet introuvable</h1>
-          <p>Le projet demandé n’existe pas ou n’est plus disponible.</p>
+  if (!project) return <Navigate to="/404" replace />;
 
-          <Link to="/" className="button button-primary">
-            Revenir à l’accueil
-          </Link>
-        </div>
-      </section>
-    );
-  }
-
-  const projectIndex = projects.findIndex((item) => item.slug === slug);
-  const projectNumber = String(projectIndex + 1).padStart(2, '0');
+  const idx = projects.findIndex(p => p.slug === slug);
 
   return (
     <>
-      <section className="project-article-hero">
-        <div className="container article-hero-grid">
-          <div>
-            <Link className="back-link" to="/">
-              ← Retour à l’accueil
-            </Link>
+      {/* ── HERO ── */}
+      <section className="project-hero">
+        <div className="project-hero-left">
+          <Link to="/" className="project-back">← Retour aux projets</Link>
+          <div className="project-hero-cat">
+            Projet {String(idx + 1).padStart(2, '0')} · DevOps
+          </div>
+          <h1 className="project-hero-title">{project.name}</h1>
+          <p className="project-hero-tagline">{project.tagline}</p>
+          <div className="project-stack">
+            {project.stack.map((tech, i) => (
+              <span key={i} className="stack-tag">{tech}</span>
+            ))}
+          </div>
+        </div>
+        <div className="project-hero-image">
+          <img src={project.heroImage} alt={project.name} />
+        </div>
+      </section>
 
-            <span className="project-number">Projet {projectNumber}</span>
-
-            <h1>{project.name}</h1>
-
-            <p className="project-tagline">{project.tagline}</p>
+      {/* ── CONTEXTE ── */}
+      <section className="project-body-section">
+        <div className="container">
+          <div className="eyebrow eyebrow--blue" style={{ marginBottom: '1.5rem' }}>
+            Contexte
+          </div>
+          <div className="impact-panel" style={{ background: 'var(--white)' }}>
             <p>{project.context}</p>
+          </div>
+        </div>
+      </section>
 
-            <div className="tag-list large">
-              {project.stack.map((item) => (
-                <span key={item} className="tag-pill">
-                  {item}
-                </span>
+      {/* ── POURQUOI / COMMENT / QUOI ── */}
+      <section className="project-body-section alt">
+        <div className="container">
+          <div className="eyebrow eyebrow--red" style={{ marginBottom: '1.5rem' }}>
+            Pourquoi · Comment · Quoi
+          </div>
+          <GoldenCircle why={project.why} how={project.how} what={project.what} />
+        </div>
+      </section>
+
+      {/* ── DÉTAILS ── */}
+      <section className="project-body-section">
+        <div className="container">
+          <div className="eyebrow" style={{ marginBottom: '1.5rem' }}>Détails</div>
+          <div className="detail-grid">
+            <div className="detail-panel">
+              <h3>Mon rôle</h3>
+              <ul>
+                {project.role.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="detail-panel">
+              <h3>Points clés</h3>
+              <ul>
+                {project.highlights.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── IMPACT ── */}
+      <section className="project-body-section alt">
+        <div className="container">
+          <div className="eyebrow eyebrow--black" style={{ marginBottom: '1.5rem' }}>
+            Ce que ça montre
+          </div>
+          <div className="impact-panel">
+            <p>{project.impact}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── GALERIE ── */}
+      {project.gallery?.length > 0 && (
+        <section className="project-body-section">
+          <div className="container">
+            <div className="eyebrow eyebrow--blue" style={{ marginBottom: '1.5rem' }}>
+              Galerie
+            </div>
+            <div className="gallery-grid">
+              {project.gallery.map((img, i) => (
+                <div key={i} className="gallery-item">
+                  <img src={img} alt={`${project.name} — ${i + 1}`} />
+                </div>
               ))}
             </div>
           </div>
+        </section>
+      )}
 
-          <div className="article-hero-image">
-            <img src={project.heroImage} alt={project.name} />
-          </div>
-        </div>
-      </section>
-
-      <section className="project-reading">
-        <div className="container">
-          <div className="section-heading centered">
-            <span className="editorial-label">Lecture du projet</span>
-            <h2>Le besoin, l’approche et le résultat.</h2>
-            <p>
-              Une lecture simple pour comprendre pourquoi le projet existe,
-              comment il a été construit et ce qu’il apporte concrètement.
-            </p>
-          </div>
-
-          <GoldenCircle
-            why={project.why}
-            how={project.how}
-            what={project.what}
-          />
-        </div>
-      </section>
-
-      <section className="project-details">
-        <div className="container details-grid">
-          <article className="detail-card">
-            <span className="project-number">01</span>
-            <h2>Mon rôle</h2>
-
-            <ul>
-              {project.role.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </article>
-
-          <article className="detail-card">
-            <span className="project-number">02</span>
-            <h2>Points forts</h2>
-
-            <ul>
-              {project.highlights.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section className="impact-section">
-        <div className="container impact-panel">
-          <span className="editorial-label">Ce que ça montre</span>
-
-          <h2>Ce que ce projet dit de ma manière de travailler.</h2>
-
-          <p>{project.impact}</p>
-        </div>
-      </section>
-
-      <section className="gallery-section">
-        <div className="container">
-          <div className="section-heading centered">
-            <span className="editorial-label">Galerie</span>
-            <h2>Aperçu du projet.</h2>
-          </div>
-
-          <div className="gallery-grid">
-            {project.gallery.map((image) => (
-              <div className="gallery-card" key={image}>
-                <img src={image} alt={project.name} />
-              </div>
-            ))}
-          </div>
+      {/* ── RETOUR ── */}
+      <section className="project-body-section" style={{ borderBottom: '3px solid var(--black)' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <Link to="/" className="btn btn--red">← Retour aux projets</Link>
         </div>
       </section>
     </>

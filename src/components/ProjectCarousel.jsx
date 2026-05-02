@@ -1,110 +1,96 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { projects } from '../data/projects';
 
-export default function ProjectCarousel({ projects }) {
-  const [activeIndex, setActiveIndex] = useState(0);
+const INTERVAL = 5000;
+
+export default function ProjectCarousel() {
+  const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  const activeProject = useMemo(() => projects[activeIndex], [projects, activeIndex]);
+  const next = useCallback(() => {
+    setCurrent(c => (c + 1) % projects.length);
+  }, []);
 
-  const goToPrevious = () => {
-    setActiveIndex((current) => (current === 0 ? projects.length - 1 : current - 1));
-  };
-
-  const goToNext = () => {
-    setActiveIndex((current) => (current === projects.length - 1 ? 0 : current + 1));
-  };
+  const prev = useCallback(() => {
+    setCurrent(c => (c - 1 + projects.length) % projects.length);
+  }, []);
 
   useEffect(() => {
-    if (paused || projects.length <= 1) return;
+    if (paused) return;
+    const id = setInterval(next, INTERVAL);
+    return () => clearInterval(id);
+  }, [paused, next]);
 
-    const timer = setInterval(() => {
-      setActiveIndex((current) => (current === projects.length - 1 ? 0 : current + 1));
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, [paused, projects.length]);
-
-  if (!activeProject) return null;
+  const p = projects[current];
+  if (!p) return null;
 
   return (
-    <section
-      className="project-carousel"
+    <div
+      className="comic-carousel"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <button
-        type="button"
-        className="carousel-arrow carousel-arrow-left"
-        onClick={goToPrevious}
-        aria-label="Projet précédent"
-      >
-        ‹
-      </button>
-
       <div className="carousel-stage">
-        <div className="carousel-image">
-          <img src={activeProject.coverImage} alt={activeProject.name} />
+        <div className="carousel-img-wrap">
+          <img src={p.coverImage} alt={p.name} key={p.slug} />
+          <div className="carousel-num-badge" aria-hidden="true">
+            {String(current + 1).padStart(2, '0')}
+          </div>
         </div>
 
         <div className="carousel-content">
-          <div className="carousel-meta">
-            <span>{String(activeIndex + 1).padStart(2, '0')}</span>
-            <span>{activeProject.stack[0]}</span>
-          </div>
-
-          <h3>{activeProject.name}</h3>
-
-          <p>{activeProject.shortDescription}</p>
-
-          <div className="tag-list">
-            {activeProject.stack.slice(0, 5).map((item) => (
-              <span className="tag-pill" key={item}>
-                {item}
+          <span className="carousel-cat">
+            {p.stack[0]} · {p.stack[1]}
+          </span>
+          <h3>{p.name}</h3>
+          <p>{p.shortDescription}</p>
+          <div className="carousel-tags">
+            {p.stack.slice(0, 4).map((tech, i) => (
+              <span key={tech} className={`tag${i % 2 === 0 ? ' tag--blue' : ''}`}>
+                {tech}
               </span>
             ))}
           </div>
-
-          <Link className="carousel-link" to={`/projets/${activeProject.slug}`}>
+          <Link to={`/projets/${p.slug}`} className="carousel-cta">
             Voir le projet →
           </Link>
         </div>
       </div>
 
-      <button
-        type="button"
-        className="carousel-arrow carousel-arrow-right"
-        onClick={goToNext}
-        aria-label="Projet suivant"
-      >
-        ›
-      </button>
-
-      <div className="carousel-dots">
-        {projects.map((project, index) => (
-          <button
-            type="button"
-            key={project.slug}
-            className={`carousel-dot ${index === activeIndex ? 'active' : ''}`}
-            onClick={() => setActiveIndex(index)}
-            aria-label={`Voir ${project.name}`}
-          />
-        ))}
+      <div className="carousel-nav">
+        <button className="carousel-arrow" onClick={prev} aria-label="Projet précédent">
+          ←
+        </button>
+        <div className="carousel-dots" role="tablist">
+          {projects.map((proj, i) => (
+            <button
+              key={proj.slug}
+              role="tab"
+              aria-selected={i === current}
+              className={`carousel-dot${i === current ? ' active' : ''}`}
+              onClick={() => setCurrent(i)}
+              aria-label={`Projet ${i + 1}`}
+            />
+          ))}
+        </div>
+        <button className="carousel-arrow" onClick={next} aria-label="Projet suivant">
+          →
+        </button>
       </div>
 
       <div className="carousel-thumbs">
-        {projects.map((project, index) => (
+        {projects.map((proj, i) => (
           <button
-            type="button"
-            key={project.slug}
-            className={`carousel-thumb ${index === activeIndex ? 'active' : ''}`}
-            onClick={() => setActiveIndex(index)}
+            key={proj.slug}
+            className={`c-thumb${i === current ? ' active' : ''}`}
+            onClick={() => setCurrent(i)}
           >
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <strong>{project.name}</strong>
+            <span className="c-thumb-num">{String(i + 1).padStart(2, '0')}</span>
+            <span className="c-thumb-name">{proj.name}</span>
           </button>
         ))}
       </div>
-    </section>
+    </div>
   );
 }

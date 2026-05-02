@@ -1,244 +1,219 @@
 import { useEffect } from 'react';
-import ProjectCarousel from '../components/ProjectCarousel';
-import { profile, projects, skills } from '../data/projects';
+import { profile, skills } from '../data/projects';
 import { aboutSections } from '../data/about';
+import ProjectCarousel from '../components/ProjectCarousel';
 
 export default function Home() {
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   useEffect(() => {
     const target = sessionStorage.getItem('portfolio-target-section');
-
     if (target) {
       sessionStorage.removeItem('portfolio-target-section');
       setTimeout(() => {
-        const element = document.getElementById(target);
-        if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
       }, 120);
     }
   }, []);
 
   return (
     <>
-      <section className="hero-section" id="hero">
-        <div className="container hero-layout">
-          <div className="hero-copy">
-            <span className="hero-kicker">Portfolio — Ingénieur DevOps</span>
+      {/* ── HERO ── */}
+      <section id="hero" className="hero-section">
+        <div className="hero-bg" aria-hidden="true" />
 
-            <h1>
-              Un ingénieur DevOps qui apporte de la clarté, de l’automatisation et de la fiabilité.
-            </h1>
-
-            <p className="hero-intro">
-              Je suis Hani, ingénieur DevOps orienté cloud et Kubernetes.
-              J’aime créer, automatiser, fiabiliser et surtout construire des solutions
-              que les équipes utilisent vraiment.
-            </p>
-
-            <p className="hero-intro secondary">
-              Mon terrain : la production réelle, les déploiements, l’observabilité,
-              le FinOps, GitLab CI/CD, GCP et Kubernetes. Mon objectif : continuer
-              à apprendre, prendre des responsabilités et évoluer vers un rôle de
-              Tech Lead DevOps.
-            </p>
-
-            <div className="hero-actions">
-              <button
-                className="button button-primary"
-                type="button"
-                onClick={() => scrollToSection('profile')}
-              >
-                Comprendre mon profil
-              </button>
-
-              <button
-                className="button button-secondary"
-                type="button"
-                onClick={() => scrollToSection('projects')}
-              >
-                Voir mes projets
-              </button>
-            </div>
+        <div className="hero-left">
+          <span className="hero-kicker">— Origin Story —</span>
+          <h1 className="hero-name">
+            Hani<br />Habi
+          </h1>
+          <div className="hero-title-badge">
+            ⚡ Ingénieur DevOps · Cloud · Production
           </div>
-
-          <aside className="hero-aside">
-            <div className="portrait-card">
-              <img src={profile.heroImage} alt={profile.name} />
-            </div>
-
-            <div className="hero-note">
-              <span>Ce que je veux apporter</span>
-              <p>
-                De l’énergie, du sérieux, une vraie curiosité technique et une capacité
-                à transformer une idée en solution concrète.
-              </p>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <section className="profile-section" id="profile">
-        <div className="container profile-grid">
-          <div className="section-heading sticky-heading">
-            <span className="section-kicker">{aboutSections.positioning.eyebrow}</span>
-            <h2>{aboutSections.positioning.title}</h2>
-          </div>
-
-          <div className="profile-text">
-            {aboutSections.positioning.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="contribution-section">
-        <div className="container">
-          <div className="section-heading centered">
-            <span className="section-kicker">{aboutSections.contribution.eyebrow}</span>
-            <h2>{aboutSections.contribution.title}</h2>
-          </div>
-
-          <div className="contribution-grid">
-            {aboutSections.contribution.cards.map((card, index) => (
-              <article className="contribution-card" key={card.title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mindset-section">
-        <div className="container mindset-grid">
-          <article className="mindset-card">
-            <span className="section-kicker">{aboutSections.creation.eyebrow}</span>
-            <h2>{aboutSections.creation.title}</h2>
-
-            {aboutSections.creation.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </article>
-
-          <article className="mindset-card">
-            <span className="section-kicker">{aboutSections.mindset.eyebrow}</span>
-            <h2>{aboutSections.mindset.title}</h2>
-
-            {aboutSections.mindset.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </article>
-        </div>
-      </section>
-
-      <section className="projects-section" id="projects">
-        <div className="container">
-          <div className="section-heading centered">
-            <span className="section-kicker">Projets & réalisations</span>
-            <h2>Un projet après l’autre, une preuve après l’autre.</h2>
+          <div className="hero-bubble">
             <p>
-              Mes projets évoluent avec mon parcours. Certains viennent de CAGIP,
-              d’autres de mes expériences précédentes ou de mon environnement personnel.
-              Tous montrent la même chose : j’aime construire des solutions concrètes.
+              Un ingénieur DevOps qui apporte de la clarté, de l'automatisation
+              et de la fiabilité dans les environnements cloud et Kubernetes.
+              J'aime créer, construire et livrer des solutions qui servent vraiment les équipes.
             </p>
           </div>
+          <div className="hero-ctas">
+            <a href="#profile" className="btn btn--blue">Mon profil →</a>
+            <a href="#projects" className="btn btn--yellow">Voir mes projets →</a>
+            <a href={profile.cvPath} download className="btn">Télécharger le CV</a>
+          </div>
+        </div>
 
-          <ProjectCarousel projects={projects} />
+        <div className="hero-right">
+          <div className="hero-photo-wrap">
+            <img src={profile.heroImage} alt={profile.name} />
+          </div>
+          <div className="hero-info-box">
+            <div className="hero-info-title">Paris · DevOps</div>
+            <div className="hero-info-sub">Cloud · Kubernetes · GitOps · CI/CD · GCP</div>
+          </div>
         </div>
       </section>
 
-      <section className="proof-section">
-        <div className="container proof-layout">
-          <div className="section-heading">
-            <span className="section-kicker">{aboutSections.proof.eyebrow}</span>
-            <h2>{aboutSections.proof.title}</h2>
-          </div>
-
-          <div className="proof-list">
-            {aboutSections.proof.cards.map((card, index) => (
-              <article className="proof-item" key={card.title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <div>
-                  <h3>{card.title}</h3>
-                  <p>{card.text}</p>
+      {/* ── PROFIL ── */}
+      <section id="profile" className="section-pad">
+        <div className="container">
+          <div className="profile-layout">
+            <div className="profile-sticky">
+              <div className="eyebrow eyebrow--white">Profil</div>
+              <h2>{aboutSections.positioning.title}</h2>
+            </div>
+            <div className="profile-paras">
+              {aboutSections.positioning.paragraphs.map((para, i) => (
+                <div key={i} className="profile-para">
+                  <p>{para}</p>
                 </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="skills-section">
-        <div className="container skills-layout">
-          <div>
-            <span className="section-kicker">Compétences</span>
-            <h2>Une base technique large, avec une trajectoire cloud et Kubernetes.</h2>
-            <p>
-              J’aime travailler sur des sujets concrets : déployer, superviser, automatiser,
-              fiabiliser, optimiser les coûts et améliorer l’usage des outils par les équipes.
-            </p>
-          </div>
-
-          <aside className="skills-panel">
-            <div className="skills-cloud">
-              {skills.map((skill) => (
-                <span key={skill} className="skill-pill">
-                  {skill}
-                </span>
               ))}
             </div>
-          </aside>
+          </div>
         </div>
       </section>
 
-      <section className="ambition-section">
-        <div className="container ambition-card">
-          <span className="section-kicker">{aboutSections.ambition.eyebrow}</span>
-          <h2>{aboutSections.ambition.title}</h2>
-
-          {aboutSections.ambition.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
+      {/* ── CE QUE J'APPORTE ── */}
+      <section className="section-alt section-pad">
+        <div className="container">
+          <div className="title-wrap">
+            <div className="eyebrow">Ce que j'apporte</div>
+            <h2 className="section-h2">Je ne viens pas seulement<br />avec des compétences.</h2>
+          </div>
+          <div className="contribution-grid">
+            {aboutSections.contribution.cards.map((card, i) => (
+              <div key={i} className="c-panel">
+                <div className="c-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div>
+                <div className="c-title">{card.title}</div>
+                <p className="c-text">{card.text}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="contact-section" id="contact">
-        <div className="container contact-card">
-          <span className="section-kicker">Contact</span>
-          <h2>Si cette façon de penser la technique vous parle, échangeons.</h2>
+      {/* ── MINDSET ── */}
+      <section className="section-pad">
+        <div className="container">
+          <div className="title-wrap">
+            <div className="eyebrow eyebrow--blue">Ma façon de penser</div>
+            <h2 className="section-h2">Confiance, autonomie<br />et envie de construire.</h2>
+          </div>
+          <div className="mindset-grid">
+            <div className="m-panel">
+              <h3>Création &amp; Comics</h3>
+              {aboutSections.creation.paragraphs.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+            <div className="m-panel">
+              <h3>Ma façon de penser</h3>
+              {aboutSections.mindset.paragraphs.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <p>
-            Je cherche un CDI dans un environnement où je peux apprendre, contribuer,
-            prendre des responsabilités et construire des solutions utiles aux équipes.
-          </p>
+      {/* ── PROJETS ── */}
+      <section id="projects" className="section-alt section-pad">
+        <div className="container">
+          <div className="title-wrap center">
+            <div className="eyebrow eyebrow--red">Featured Stories</div>
+            <h2 className="section-h2">Mes projets</h2>
+            <p className="section-desc">
+              Des solutions concrètes nées de vrais besoins terrain. Chaque projet raconte
+              une histoire : un problème, une idée, une solution.
+            </p>
+          </div>
+          <ProjectCarousel />
+        </div>
+      </section>
 
-          <div className="cta-actions">
-            <a className="button button-primary" href={`mailto:${profile.email}`}>
-              M’écrire
-            </a>
+      {/* ── PREUVES ── */}
+      <section className="section-pad">
+        <div className="container">
+          <div className="proof-layout">
+            <div className="proof-sticky">
+              <div className="eyebrow eyebrow--black">Preuves concrètes</div>
+              <h2>{aboutSections.proof.title}</h2>
+            </div>
+            <div className="proof-list">
+              {aboutSections.proof.cards.map((card, i) => (
+                <div key={i} className="proof-item">
+                  <div className="proof-n">{String(i + 1).padStart(2, '0')}</div>
+                  <div>
+                    <h3>{card.title}</h3>
+                    <p>{card.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <a
-              className="button button-secondary"
-              href={profile.linkedin}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Voir LinkedIn
-            </a>
+      {/* ── COMPÉTENCES ── */}
+      <section className="section-dark section-pad">
+        <div className="container">
+          <div className="skills-inner">
+            <div>
+              <div className="eyebrow" style={{ marginBottom: '1.2rem' }}>Super Powers</div>
+              <h2 className="section-h2 inv">Mes compétences techniques</h2>
+              <p className="section-desc inv" style={{ marginTop: '1rem' }}>
+                Un profil polyvalent : cloud, Kubernetes, CI/CD, automatisation, supervision et sécurité.
+                Une base système solide, une trajectoire DevOps cloud ambitieuse.
+              </p>
+            </div>
+            <div className="skills-cloud">
+              {skills.map((skill, i) => (
+                <span key={i} className="skill-badge">{skill}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <a
-              className="button button-secondary"
-              href={profile.cvPath}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Télécharger mon CV
-            </a>
+      {/* ── AMBITION ── */}
+      <section className="section-alt section-pad">
+        <div className="container">
+          <div className="title-wrap center">
+            <div className="eyebrow">Objectif CDI</div>
+          </div>
+          <div className="ambition-card">
+            <h2>{aboutSections.ambition.title}</h2>
+            <div className="ambition-paras">
+              {aboutSections.ambition.paragraphs.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONTACT ── */}
+      <section id="contact" className="section-pad">
+        <div className="container">
+          <div className="contact-card">
+            <div className="eyebrow" style={{ marginBottom: '0.75rem' }}>Me contacter</div>
+            <h2>Travaillons ensemble !</h2>
+            <div className="contact-bubble">
+              <p>
+                Disponible pour un CDI en DevOps, Cloud ou Kubernetes. Je cherche un environnement
+                exigeant, une équipe solide et des sujets techniques ambitieux.
+              </p>
+            </div>
+            <div className="contact-ctas">
+              <a href={`mailto:${profile.email}`} className="btn btn--yellow">
+                Envoyer un email
+              </a>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" className="btn">
+                LinkedIn →
+              </a>
+              <a href={profile.cvPath} download className="btn btn--red">
+                Télécharger le CV
+              </a>
+            </div>
           </div>
         </div>
       </section>
